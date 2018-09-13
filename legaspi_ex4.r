@@ -4,7 +4,7 @@ source("legaspi_ex3.r")
 
 result1 = AugCoeffMatrix(system)
 aug_coeff_matrix = result1$augcoeffmatrix
-#print(a)
+vars = result1$variables
 
 n = len-1
 
@@ -73,9 +73,9 @@ GaussianElimination <- function(aug_coeff_matrix){
     print(NA)
   }else{
     x = BackwardSubstitution(a)
-    print(a)
-    print(x)
   }
+  result = list(solutionSet = x, variables = vars, matrix = a)
+  return(result)
 }
 
 GetIdentityMatrix <- function(a){
@@ -110,14 +110,17 @@ GaussJordanElimination <- function(a){
     print(NA)
   }else{
     x = GetCoeffs(a)
-    print(a)
-    print(x) 
   }
+  result = list(solutionSet = x, variables = vars, matrix = a)
+  return(result)
 }
 
 #print(aug_coeff_matrix)
-GaussianElimination(aug_coeff_matrix)
-GaussJordanElimination(aug_coeff_matrix)
+result1 = GaussianElimination(aug_coeff_matrix)
+result2 = GaussJordanElimination(aug_coeff_matrix)
+
+print(result1)
+print(result2)
 
 
 
