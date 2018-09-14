@@ -1,7 +1,17 @@
-E1 <- function (x1, x2, x3) 0.3 * x1 + -0.2 * x2 + 10 * x3 + -71.4;
-E2 <- function (x1, x2, x3) 3 * x1 + -0.2 * x3 + -0.1 * x2 + -7.85;
-E3 <- function (x1, x2, x3) 0.1 * x1 + 7 * x2 + -0.3 * x3 + 19.3;
-system <- list(E1, E2, E3);
+E1 <- function (x1, x2, x3, x4, x5, x7, x8, x9) 4 * x1 + -1 * x2 + 0 * x3 + -1 * x4 + 0 * x5 + 0 * x6 + 0 * x7 + 0 * x8 + 0 * x9 + -80;
+E2 <- function (x1, x2, x3, x4, x5, x7, x8, x9) -1 * x1 + 4 * x2 + -1 * x3 + 0 * x4 + -1 * x5 + 0 * x6 + 0 * x7 + 0 * x8 + 0 * x9 + -30;
+E3 <- function (x1, x2, x3, x4, x5, x7, x8, x9) 0 * x1 + -1 * x2 + 4 * x3 + 0 * x4 + 0 * x5 + -1 * x6 + 0 * x7 + 0 * x8 + 0 * x9 + -80;
+E4 <- function (x1, x2, x3, x4, x5, x7, x8, x9) -1 * x1 + 0 * x2 + 0 * x3 + 4 * x4 + -1 * x5 + 0 * x6 + -1 * x7 + 0 * x8 + 0 * x9 + -50;
+
+E5 <- function (x1, x2, x3, x4, x5, x7, x8, x9) 0 * x1 + -1 * x2 + 0 * x3 + -1 * x4 + 4 * x5 + -1 * x6 + 0 * x7 + -1 * x8 + 0 * x9 + 0;
+E6 <- function (x1, x2, x3, x4, x5, x7, x8, x9) 0 * x1 + 0 * x2 + -1 * x3 + 0 * x4 + -1 * x5 + 4 * x6 + 0 * x7 + 0 * x8 + -1 * x9 + -50;
+E7 <- function (x1, x2, x3, x4, x5, x7, x8, x9) 0 * x1 + 0 * x2 + 0 * x3 + -1 * x4 + 0 * x5 + 0 * x6 + 4 * x7 + -1 * x8 + 0 * x9 + -120;
+
+E8 <- function (x1, x2, x3, x4, x5, x7, x8, x9) 0 * x1 + 0 * x2 + 0 * x3 + 0 * x4 + -1 * x5 + 0 * x6 + -1 * x7 + 4 * x8 + -1 * x9 + -70;
+E9 <- function (x1, x2, x3, x4, x5, x7, x8, x9) 0 * x1 + 0 * x2 + 0 * x3 + 0 * x4 + 0 * x5 + -1 * x6 + 0 * x7 + -1 * x8 + 4 * x9 + -120;
+
+
+system <- list(E1, E2, E3, E4, E5, E6, E7, E8, E9);
 
 len = length(system) + 1
 
@@ -37,6 +47,12 @@ InitMatrix <- function(){
   col_list = ColNames()
   matrix_result = matrix(data=0, nrow=length(system), ncol=length(system)+1, dimnames = list(row_list, col_list))
   return(matrix_result)
+}
+
+DeparseEq <- function(system, i){
+  equation = paste(deparse(system[i])[2], deparse(system[i])[3], sep="")
+  equation = substr(equation, 1, nchar(equation)-1)
+  return(equation)
 }
 
 Deparse <- function(system, i, j){
@@ -98,13 +114,14 @@ GetCoefficients <- function(j, eq_list){
 
 SplitTerms <- function(equation){
   splitted_list = strsplit(equation, " \\+ ")[[1]];
+  #print(splitted_list)
   return(splitted_list)
 }
 
 Tokenize <- function(system){
   coefficients = c()
   for(i in 1:len){
-    equation = Deparse(system, i, 2);
+    equation = DeparseEq(system, i);
     splitted_list = SplitTerms(equation)
     eq_list = SortTerms(splitted_list)
     
@@ -149,10 +166,8 @@ AugCoeffMatrix <- function(system){
 }
 
 
-
-
-
-
+#res = AugCoeffMatrix(system)
+#print(res)
 
 
 
